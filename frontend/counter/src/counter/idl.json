@@ -1,66 +1,104 @@
 {
-  "version": "0.1.0",
-  "name": "counter",
+  "address": "HNVpWAQDDdAGq36gpHysc674pWhSv55nng9k9s55Pdqw",
+  "metadata": {
+    "name": "counter",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
   "instructions": [
     {
-      "name": "initialize",
+      "name": "increment",
+      "discriminator": [11, 18, 104, 9, 104, 174, 59, 33],
       "accounts": [
         {
           "name": "counter",
-          "isMut": true,
-          "isSigner": false
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 117, 110, 116, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
         },
         {
           "name": "user",
-          "isMut": true,
-          "isSigner": true
+          "writable": true,
+          "signer": true
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          "name": "owner",
+          "relations": ["counter"]
         }
       ],
       "args": []
     },
     {
-      "name": "increment",
+      "name": "initialize",
+      "discriminator": [175, 175, 109, 31, 13, 152, 155, 237],
       "accounts": [
         {
           "name": "counter",
-          "isMut": true,
-          "isSigner": false
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 117, 110, 116, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
         },
         {
           "name": "user",
-          "isMut": true,
-          "isSigner": true
+          "writable": true,
+          "signer": true
         },
         {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": false
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
       "name": "reset",
+      "discriminator": [23, 81, 251, 84, 138, 183, 240, 214],
       "accounts": [
         {
           "name": "counter",
-          "isMut": true,
-          "isSigner": false
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 117, 110, 116, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
         },
         {
           "name": "user",
-          "isMut": true,
-          "isSigner": true
+          "writable": true,
+          "signer": true
         },
         {
           "name": "owner",
-          "isMut": false,
-          "isSigner": false
+          "relations": ["counter"]
         }
       ],
       "args": []
@@ -69,30 +107,45 @@
   "accounts": [
     {
       "name": "Counter",
+      "discriminator": [255, 176, 4, 245, 188, 253, 124, 25]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Unauthorized: You are not the owner of this counter"
+    },
+    {
+      "code": 6001,
+      "name": "Overflow",
+      "msg": "Overflow: Counter value too large"
+    }
+  ],
+  "types": [
+    {
+      "name": "Counter",
       "type": {
         "kind": "struct",
         "fields": [
           {
             "name": "owner",
-            "type": "publicKey"
+            "type": "pubkey"
           },
           {
             "name": "count",
             "type": "u64"
           },
           {
-            "name": "totalIncrements",
+            "name": "total_increments",
             "type": "u64"
           },
           {
-            "name": "createdAt",
+            "name": "created_at",
             "type": "i64"
           }
         ]
       }
     }
-  ],
-  "metadata": {
-    "address": "HNVpWAQDDdAGq36gpHysc674pWhSv55nng9k9s55Pdqw"
-  }
+  ]
 }
