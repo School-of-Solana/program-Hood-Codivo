@@ -5,7 +5,7 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { Program, AnchorProvider, web3, BN } from "@coral-xyz/anchor";
 import { PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 // @ts-ignore: Allow importing JSON idl without explicit type declarations
-import idlJson from "../idl.json";
+import idlJson from "./idl.json";
 
 const PROGRAM_ID = new PublicKey(
   "HNVpWAQDDdAGq36gpHysc674pWhSv55nng9k9s55Pdqw"
