@@ -6,6 +6,7 @@ import { Program, AnchorProvider, web3, BN } from "@coral-xyz/anchor";
 import { PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 // @ts-ignore: Allow importing JSON idl without explicit type declarations
 import idlJson from "./idl.json";
+import type { Connection } from "@solana/web3.js";
 
 const PROGRAM_ID = new PublicKey(
   "HNVpWAQDDdAGq36gpHysc674pWhSv55nng9k9s55Pdqw"
@@ -26,7 +27,7 @@ export const CounterApp: FC = () => {
   const [counterPDA, setCounterPDA] = useState<PublicKey | null>(null);
   const [balance, setBalance] = useState<number>(0);
 
-  const getProvider = () => {
+  const getProvider = (connection: Connection) => {
     if (
       !wallet.publicKey ||
       !wallet.signTransaction ||
@@ -39,8 +40,8 @@ export const CounterApp: FC = () => {
     });
   };
 
-  const getProgram = () => {
-    const provider = getProvider();
+  const getProgram = (connection: Connection) => {
+    const provider = getProvider(connection);
     if (!provider) return null;
     // Pass idl and provider only - program ID comes from idl.address
     return new Program(idlJson as any, provider);
@@ -74,7 +75,7 @@ export const CounterApp: FC = () => {
 
   const fetchCounter = async (pda: PublicKey) => {
     try {
-      const program = getProgram();
+      const program = getProgram(connection);
       if (!program) return;
 
       const account = await (program.account as any).counter.fetch(pda);
@@ -98,7 +99,7 @@ export const CounterApp: FC = () => {
 
     setLoading(true);
     try {
-      const program = getProgram();
+      const program = getProgram(connection);
       if (!program) {
         alert("Please connect your wallet first!");
         return;
@@ -136,7 +137,7 @@ export const CounterApp: FC = () => {
 
     setLoading(true);
     try {
-      const program = getProgram();
+      const program = getProgram(connection);
       if (!program) {
         alert("Please connect your wallet first!");
         return;
@@ -173,7 +174,7 @@ export const CounterApp: FC = () => {
 
     setLoading(true);
     try {
-      const program = getProgram();
+      const program = getProgram(connection);
       if (!program) {
         alert("Please connect your wallet first!");
         return;
